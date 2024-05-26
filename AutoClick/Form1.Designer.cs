@@ -30,8 +30,8 @@
         {
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.hours = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.BtnLocation = new System.Windows.Forms.Button();
+            this.CBoxButton = new System.Windows.Forms.ComboBox();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.ClickInterval = new System.Windows.Forms.GroupBox();
             this.miniseconds = new System.Windows.Forms.Label();
@@ -41,7 +41,7 @@
             this.mins = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.ClickOptions = new System.Windows.Forms.GroupBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.CBoxType = new System.Windows.Forms.ComboBox();
             this.ClickType = new System.Windows.Forms.Label();
             this.MouseOptions = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -49,16 +49,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.PointY = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.PointX = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.RBtnLocation2 = new System.Windows.Forms.RadioButton();
+            this.RBtnLocation1 = new System.Windows.Forms.RadioButton();
+            this.BtnStart = new System.Windows.Forms.Button();
+            this.BtnStop = new System.Windows.Forms.Button();
+            this.BtnRecord = new System.Windows.Forms.Button();
+            this.BtnHotkey = new System.Windows.Forms.Button();
             this.ClickInterval.SuspendLayout();
             this.ClickOptions.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -72,6 +72,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(69, 22);
             this.textBox1.TabIndex = 0;
+            this.textBox1.TabStop = false;
             this.textBox1.Text = "0";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -84,26 +85,29 @@
             this.hours.TabIndex = 1;
             this.hours.Text = "hours";
             // 
-            // button1
+            // BtnLocation
             // 
-            this.button1.Location = new System.Drawing.Point(283, 22);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(129, 36);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Pick location";
-            this.button1.UseVisualStyleBackColor = true;
+            this.BtnLocation.Location = new System.Drawing.Point(283, 22);
+            this.BtnLocation.Name = "BtnLocation";
+            this.BtnLocation.Size = new System.Drawing.Size(129, 36);
+            this.BtnLocation.TabIndex = 2;
+            this.BtnLocation.Text = "Pick location";
+            this.BtnLocation.UseVisualStyleBackColor = true;
+            this.BtnLocation.Click += new System.EventHandler(this.BtnLocation_Click);
             // 
-            // comboBox1
+            // CBoxButton
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.CBoxButton.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBoxButton.FormattingEnabled = true;
+            this.CBoxButton.Items.AddRange(new object[] {
+            "Left",
             "Right",
             "Middle"});
-            this.comboBox1.Location = new System.Drawing.Point(126, 21);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(151, 24);
-            this.comboBox1.TabIndex = 3;
-            this.comboBox1.Text = "Left";
+            this.CBoxButton.Location = new System.Drawing.Point(126, 21);
+            this.CBoxButton.Name = "CBoxButton";
+            this.CBoxButton.Size = new System.Drawing.Size(151, 24);
+            this.CBoxButton.TabIndex = 3;
+            this.CBoxButton.TabStop = false;
             // 
             // radioButton1
             // 
@@ -148,6 +152,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(69, 22);
             this.textBox4.TabIndex = 5;
+            this.textBox4.TabStop = false;
             this.textBox4.Text = "100";
             this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -166,6 +171,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(69, 22);
             this.textBox3.TabIndex = 3;
+            this.textBox3.TabStop = false;
             this.textBox3.Text = "0";
             this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -184,15 +190,16 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(69, 22);
             this.textBox2.TabIndex = 1;
+            this.textBox2.TabStop = false;
             this.textBox2.Text = "0";
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // ClickOptions
             // 
-            this.ClickOptions.Controls.Add(this.comboBox2);
+            this.ClickOptions.Controls.Add(this.CBoxType);
             this.ClickOptions.Controls.Add(this.ClickType);
             this.ClickOptions.Controls.Add(this.MouseOptions);
-            this.ClickOptions.Controls.Add(this.comboBox1);
+            this.ClickOptions.Controls.Add(this.CBoxButton);
             this.ClickOptions.Location = new System.Drawing.Point(12, 129);
             this.ClickOptions.Name = "ClickOptions";
             this.ClickOptions.Size = new System.Drawing.Size(300, 100);
@@ -200,16 +207,18 @@
             this.ClickOptions.TabStop = false;
             this.ClickOptions.Text = "Click options";
             // 
-            // comboBox2
+            // CBoxType
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.CBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBoxType.FormattingEnabled = true;
+            this.CBoxType.Items.AddRange(new object[] {
+            "Single",
             "Double"});
-            this.comboBox2.Location = new System.Drawing.Point(126, 60);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(151, 24);
-            this.comboBox2.TabIndex = 9;
-            this.comboBox2.Text = "Single";
+            this.CBoxType.Location = new System.Drawing.Point(126, 60);
+            this.CBoxType.Name = "CBoxType";
+            this.CBoxType.Size = new System.Drawing.Size(151, 24);
+            this.CBoxType.TabIndex = 9;
+            this.CBoxType.TabStop = false;
             // 
             // ClickType
             // 
@@ -253,6 +262,7 @@
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(88, 22);
             this.numericUpDown1.TabIndex = 8;
+            this.numericUpDown1.TabStop = false;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDown1.Value = new decimal(new int[] {
             1,
@@ -283,13 +293,13 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox6);
+            this.groupBox2.Controls.Add(this.PointY);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.textBox5);
+            this.groupBox2.Controls.Add(this.PointX);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.radioButton4);
-            this.groupBox2.Controls.Add(this.radioButton3);
-            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.RBtnLocation2);
+            this.groupBox2.Controls.Add(this.RBtnLocation1);
+            this.groupBox2.Controls.Add(this.BtnLocation);
             this.groupBox2.Location = new System.Drawing.Point(12, 235);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(641, 67);
@@ -297,14 +307,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Cursor position";
             // 
-            // textBox6
+            // PointY
             // 
-            this.textBox6.Location = new System.Drawing.Point(541, 30);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(54, 22);
-            this.textBox6.TabIndex = 11;
-            this.textBox6.Text = "0";
-            this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.PointY.Location = new System.Drawing.Point(541, 30);
+            this.PointY.Name = "PointY";
+            this.PointY.Size = new System.Drawing.Size(54, 22);
+            this.PointY.TabIndex = 11;
+            this.PointY.TabStop = false;
+            this.PointY.Text = "0";
+            this.PointY.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label3
             // 
@@ -315,14 +326,15 @@
             this.label3.TabIndex = 12;
             this.label3.Text = "Y";
             // 
-            // textBox5
+            // PointX
             // 
-            this.textBox5.Location = new System.Drawing.Point(447, 30);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(54, 22);
-            this.textBox5.TabIndex = 7;
-            this.textBox5.Text = "0";
-            this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.PointX.Location = new System.Drawing.Point(447, 30);
+            this.PointX.Name = "PointX";
+            this.PointX.Size = new System.Drawing.Size(54, 22);
+            this.PointX.TabIndex = 7;
+            this.PointX.TabStop = false;
+            this.PointX.Text = "0";
+            this.PointX.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label2
             // 
@@ -333,79 +345,86 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "X";
             // 
-            // radioButton4
+            // RBtnLocation2
             // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(260, 33);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(17, 16);
-            this.radioButton4.TabIndex = 10;
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.RBtnLocation2.AutoSize = true;
+            this.RBtnLocation2.Location = new System.Drawing.Point(260, 33);
+            this.RBtnLocation2.Name = "RBtnLocation2";
+            this.RBtnLocation2.Size = new System.Drawing.Size(17, 16);
+            this.RBtnLocation2.TabIndex = 10;
+            this.RBtnLocation2.UseVisualStyleBackColor = true;
             // 
-            // radioButton3
+            // RBtnLocation1
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Checked = true;
-            this.radioButton3.Location = new System.Drawing.Point(6, 31);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(120, 20);
-            this.radioButton3.TabIndex = 9;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Current location";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.RBtnLocation1.AutoSize = true;
+            this.RBtnLocation1.Checked = true;
+            this.RBtnLocation1.Location = new System.Drawing.Point(6, 31);
+            this.RBtnLocation1.Name = "RBtnLocation1";
+            this.RBtnLocation1.Size = new System.Drawing.Size(120, 20);
+            this.RBtnLocation1.TabIndex = 9;
+            this.RBtnLocation1.TabStop = true;
+            this.RBtnLocation1.Text = "Current location";
+            this.RBtnLocation1.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // BtnStart
             // 
-            this.button2.Location = new System.Drawing.Point(21, 322);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(291, 54);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Start (F8)";
-            this.button2.UseVisualStyleBackColor = true;
+            this.BtnStart.Location = new System.Drawing.Point(21, 322);
+            this.BtnStart.Name = "BtnStart";
+            this.BtnStart.Size = new System.Drawing.Size(291, 54);
+            this.BtnStart.TabIndex = 13;
+            this.BtnStart.Text = "Start (F5)";
+            this.BtnStart.UseVisualStyleBackColor = true;
+            this.BtnStart.Click += new System.EventHandler(this.BtnStart_Click);
             // 
-            // button3
+            // BtnStop
             // 
-            this.button3.Location = new System.Drawing.Point(332, 322);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(310, 54);
-            this.button3.TabIndex = 14;
-            this.button3.Text = "Stop (F8)";
-            this.button3.UseVisualStyleBackColor = true;
+            this.BtnStop.Enabled = false;
+            this.BtnStop.Location = new System.Drawing.Point(332, 322);
+            this.BtnStop.Name = "BtnStop";
+            this.BtnStop.Size = new System.Drawing.Size(310, 54);
+            this.BtnStop.TabIndex = 14;
+            this.BtnStop.Text = "Stop (F5)";
+            this.BtnStop.UseVisualStyleBackColor = true;
+            this.BtnStop.Click += new System.EventHandler(this.BtnStop_Click);
             // 
-            // button4
+            // BtnRecord
             // 
-            this.button4.Location = new System.Drawing.Point(332, 385);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(310, 54);
-            this.button4.TabIndex = 16;
-            this.button4.Text = "Record and Playback";
-            this.button4.UseVisualStyleBackColor = true;
+            this.BtnRecord.Location = new System.Drawing.Point(332, 385);
+            this.BtnRecord.Name = "BtnRecord";
+            this.BtnRecord.Size = new System.Drawing.Size(310, 54);
+            this.BtnRecord.TabIndex = 16;
+            this.BtnRecord.Text = "Record and Playback";
+            this.BtnRecord.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // BtnHotkey
             // 
-            this.button5.Location = new System.Drawing.Point(21, 385);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(291, 54);
-            this.button5.TabIndex = 15;
-            this.button5.Text = "Hotkey setting";
-            this.button5.UseVisualStyleBackColor = true;
+            this.BtnHotkey.Location = new System.Drawing.Point(21, 385);
+            this.BtnHotkey.Name = "BtnHotkey";
+            this.BtnHotkey.Size = new System.Drawing.Size(291, 54);
+            this.BtnHotkey.TabIndex = 15;
+            this.BtnHotkey.Text = "Hotkey setting";
+            this.BtnHotkey.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(666, 479);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.BtnRecord);
+            this.Controls.Add(this.BtnHotkey);
+            this.Controls.Add(this.BtnStop);
+            this.Controls.Add(this.BtnStart);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ClickOptions);
             this.Controls.Add(this.ClickInterval);
             this.MaximizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Auto Clicked";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ClickInterval.ResumeLayout(false);
             this.ClickInterval.PerformLayout();
             this.ClickOptions.ResumeLayout(false);
@@ -423,8 +442,8 @@
 
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label hours;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button BtnLocation;
+        private System.Windows.Forms.ComboBox CBoxButton;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.GroupBox ClickInterval;
         private System.Windows.Forms.TextBox textBox2;
@@ -436,22 +455,22 @@
         private System.Windows.Forms.GroupBox ClickOptions;
         private System.Windows.Forms.Label ClickType;
         private System.Windows.Forms.Label MouseOptions;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox CBoxType;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox PointY;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox PointX;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.RadioButton RBtnLocation2;
+        private System.Windows.Forms.RadioButton RBtnLocation1;
+        private System.Windows.Forms.Button BtnStart;
+        private System.Windows.Forms.Button BtnStop;
+        private System.Windows.Forms.Button BtnRecord;
+        private System.Windows.Forms.Button BtnHotkey;
     }
 }
 
