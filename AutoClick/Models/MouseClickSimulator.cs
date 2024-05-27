@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,19 +16,40 @@ namespace AutoClick.Models
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
 
         // Định nghĩa các cờ cho sự kiện chuột
-        private const int MOUSEEVENTF_LEFTDOWN = 0x02;
-        private const int MOUSEEVENTF_LEFTUP = 0x04;
+        private const uint MOUSEEVENTF_MOVE = 0x0001;
+        private const uint MOUSEEVENTF_LEFTDOWN = 0x0002;
+        private const uint MOUSEEVENTF_LEFTUP = 0x0004;
+        private const uint MOUSEEVENTF_RIGHTDOWN = 0x0008;
+        private const uint MOUSEEVENTF_RIGHTUP = 0x0010;
+        private const uint MOUSEEVENTF_MIDDLEDOWN = 0x0020;
+        private const uint MOUSEEVENTF_MIDDLEUP = 0x0040;
+        private const uint MOUSEEVENTF_ABSOLUTE = 0x8000;
 
-        public static void SimulateLeftClick(int x, int y)
+        // Mô phỏng nhấp chuột trái tại vị trí hiện tại của con trỏ chuột
+        public static void LeftClick()
         {
-            // Di chuyển con trỏ chuột đến vị trí mong muốn trước khi nhấp chuột
-            Cursor.Position = new Point(x, y);
+            mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+        }
 
-            // Simulate left mouse button down
-            mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+        // Mô phỏng nhấp chuột phải tại vị trí hiện tại của con trỏ chuột
+        public static void RightClick()
+        {
+            mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
+        }
 
-            // Simulate left mouse button up
-            mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+        // Di chuyển con trỏ chuột đến vị trí (x, y) trên màn hình
+        public static void MoveMouse(int x, int y)
+        {
+            mouse_event(MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE, (uint)x, (uint)y, 0, 0);
+        }
+
+        public static void ClickRepeat(int repeat, int miniSecs = 0)
+        {
+            for (int i = 0; i < repeat; i++)
+            {
+                LeftClick();
+                Thread.Sleep(miniSecs);
+            }
         }
     }
 }

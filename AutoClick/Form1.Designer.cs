@@ -28,26 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.Hour_txt = new System.Windows.Forms.TextBox();
             this.hours = new System.Windows.Forms.Label();
             this.BtnLocation = new System.Windows.Forms.Button();
             this.CBoxButton = new System.Windows.Forms.ComboBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.RBtnRepeat = new System.Windows.Forms.RadioButton();
             this.ClickInterval = new System.Windows.Forms.GroupBox();
             this.miniseconds = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.MiniSecs_txt = new System.Windows.Forms.TextBox();
             this.secs = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.Secs_txt = new System.Windows.Forms.TextBox();
             this.mins = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.Mins_txt = new System.Windows.Forms.TextBox();
             this.ClickOptions = new System.Windows.Forms.GroupBox();
             this.CBoxType = new System.Windows.Forms.ComboBox();
             this.ClickType = new System.Windows.Forms.Label();
             this.MouseOptions = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.Repeat = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.RBtnReInfinite = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.PointY = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -62,19 +62,19 @@
             this.ClickInterval.SuspendLayout();
             this.ClickOptions.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Repeat)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // textBox1
+            // Hour_txt
             // 
-            this.textBox1.Location = new System.Drawing.Point(6, 30);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(69, 22);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.TabStop = false;
-            this.textBox1.Text = "0";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Hour_txt.Location = new System.Drawing.Point(6, 30);
+            this.Hour_txt.Name = "Hour_txt";
+            this.Hour_txt.Size = new System.Drawing.Size(69, 22);
+            this.Hour_txt.TabIndex = 0;
+            this.Hour_txt.TabStop = false;
+            this.Hour_txt.Text = "0";
+            this.Hour_txt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // hours
             // 
@@ -109,26 +109,26 @@
             this.CBoxButton.TabIndex = 3;
             this.CBoxButton.TabStop = false;
             // 
-            // radioButton1
+            // RBtnRepeat
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(19, 26);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(73, 20);
-            this.radioButton1.TabIndex = 4;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Repeat";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.RBtnRepeat.AutoSize = true;
+            this.RBtnRepeat.Location = new System.Drawing.Point(19, 26);
+            this.RBtnRepeat.Name = "RBtnRepeat";
+            this.RBtnRepeat.Size = new System.Drawing.Size(73, 20);
+            this.RBtnRepeat.TabIndex = 4;
+            this.RBtnRepeat.TabStop = true;
+            this.RBtnRepeat.Text = "Repeat";
+            this.RBtnRepeat.UseVisualStyleBackColor = true;
             // 
             // ClickInterval
             // 
             this.ClickInterval.Controls.Add(this.miniseconds);
-            this.ClickInterval.Controls.Add(this.textBox4);
+            this.ClickInterval.Controls.Add(this.MiniSecs_txt);
             this.ClickInterval.Controls.Add(this.secs);
-            this.ClickInterval.Controls.Add(this.textBox3);
+            this.ClickInterval.Controls.Add(this.Secs_txt);
             this.ClickInterval.Controls.Add(this.mins);
-            this.ClickInterval.Controls.Add(this.textBox2);
-            this.ClickInterval.Controls.Add(this.textBox1);
+            this.ClickInterval.Controls.Add(this.Mins_txt);
+            this.ClickInterval.Controls.Add(this.Hour_txt);
             this.ClickInterval.Controls.Add(this.hours);
             this.ClickInterval.Location = new System.Drawing.Point(12, 12);
             this.ClickInterval.Name = "ClickInterval";
@@ -146,15 +146,15 @@
             this.miniseconds.TabIndex = 6;
             this.miniseconds.Text = "miniseconds";
             // 
-            // textBox4
+            // MiniSecs_txt
             // 
-            this.textBox4.Location = new System.Drawing.Point(447, 30);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(69, 22);
-            this.textBox4.TabIndex = 5;
-            this.textBox4.TabStop = false;
-            this.textBox4.Text = "100";
-            this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.MiniSecs_txt.Location = new System.Drawing.Point(447, 30);
+            this.MiniSecs_txt.Name = "MiniSecs_txt";
+            this.MiniSecs_txt.Size = new System.Drawing.Size(69, 22);
+            this.MiniSecs_txt.TabIndex = 5;
+            this.MiniSecs_txt.TabStop = false;
+            this.MiniSecs_txt.Text = "100";
+            this.MiniSecs_txt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // secs
             // 
@@ -165,15 +165,15 @@
             this.secs.TabIndex = 4;
             this.secs.Text = "secs";
             // 
-            // textBox3
+            // Secs_txt
             // 
-            this.textBox3.Location = new System.Drawing.Point(304, 30);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(69, 22);
-            this.textBox3.TabIndex = 3;
-            this.textBox3.TabStop = false;
-            this.textBox3.Text = "0";
-            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Secs_txt.Location = new System.Drawing.Point(304, 30);
+            this.Secs_txt.Name = "Secs_txt";
+            this.Secs_txt.Size = new System.Drawing.Size(69, 22);
+            this.Secs_txt.TabIndex = 3;
+            this.Secs_txt.TabStop = false;
+            this.Secs_txt.Text = "0";
+            this.Secs_txt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // mins
             // 
@@ -184,15 +184,15 @@
             this.mins.TabIndex = 2;
             this.mins.Text = "mins";
             // 
-            // textBox2
+            // Mins_txt
             // 
-            this.textBox2.Location = new System.Drawing.Point(156, 30);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(69, 22);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.TabStop = false;
-            this.textBox2.Text = "0";
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Mins_txt.Location = new System.Drawing.Point(156, 30);
+            this.Mins_txt.Name = "Mins_txt";
+            this.Mins_txt.Size = new System.Drawing.Size(69, 22);
+            this.Mins_txt.TabIndex = 1;
+            this.Mins_txt.TabStop = false;
+            this.Mins_txt.Text = "0";
+            this.Mins_txt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // ClickOptions
             // 
@@ -240,10 +240,10 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.Repeat);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Controls.Add(this.RBtnReInfinite);
+            this.groupBox1.Controls.Add(this.RBtnRepeat);
             this.groupBox1.Location = new System.Drawing.Point(332, 129);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(321, 100);
@@ -251,20 +251,20 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Click repeat";
             // 
-            // numericUpDown1
+            // Repeat
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(148, 26);
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.Repeat.Location = new System.Drawing.Point(148, 26);
+            this.Repeat.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(88, 22);
-            this.numericUpDown1.TabIndex = 8;
-            this.numericUpDown1.TabStop = false;
-            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.Repeat.Name = "Repeat";
+            this.Repeat.Size = new System.Drawing.Size(88, 22);
+            this.Repeat.TabIndex = 8;
+            this.Repeat.TabStop = false;
+            this.Repeat.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Repeat.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -279,17 +279,17 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "times";
             // 
-            // radioButton2
+            // RBtnReInfinite
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Checked = true;
-            this.radioButton2.Location = new System.Drawing.Point(19, 59);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(152, 20);
-            this.radioButton2.TabIndex = 5;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Repeat until stopped";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.RBtnReInfinite.AutoSize = true;
+            this.RBtnReInfinite.Checked = true;
+            this.RBtnReInfinite.Location = new System.Drawing.Point(19, 59);
+            this.RBtnReInfinite.Name = "RBtnReInfinite";
+            this.RBtnReInfinite.Size = new System.Drawing.Size(152, 20);
+            this.RBtnReInfinite.TabIndex = 5;
+            this.RBtnReInfinite.TabStop = true;
+            this.RBtnReInfinite.Text = "Repeat until stopped";
+            this.RBtnReInfinite.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -372,7 +372,7 @@
             this.BtnStart.Name = "BtnStart";
             this.BtnStart.Size = new System.Drawing.Size(291, 54);
             this.BtnStart.TabIndex = 13;
-            this.BtnStart.Text = "Start (F5)";
+            this.BtnStart.Text = "Start (F4)";
             this.BtnStart.UseVisualStyleBackColor = true;
             this.BtnStart.Click += new System.EventHandler(this.BtnStart_Click);
             // 
@@ -383,7 +383,7 @@
             this.BtnStop.Name = "BtnStop";
             this.BtnStop.Size = new System.Drawing.Size(310, 54);
             this.BtnStop.TabIndex = 14;
-            this.BtnStop.Text = "Stop (F5)";
+            this.BtnStop.Text = "Stop (F4)";
             this.BtnStop.UseVisualStyleBackColor = true;
             this.BtnStop.Click += new System.EventHandler(this.BtnStop_Click);
             // 
@@ -431,7 +431,7 @@
             this.ClickOptions.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Repeat)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -440,17 +440,17 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox Hour_txt;
         private System.Windows.Forms.Label hours;
         private System.Windows.Forms.Button BtnLocation;
         private System.Windows.Forms.ComboBox CBoxButton;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton RBtnRepeat;
         private System.Windows.Forms.GroupBox ClickInterval;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox Mins_txt;
         private System.Windows.Forms.Label miniseconds;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox MiniSecs_txt;
         private System.Windows.Forms.Label secs;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox Secs_txt;
         private System.Windows.Forms.Label mins;
         private System.Windows.Forms.GroupBox ClickOptions;
         private System.Windows.Forms.Label ClickType;
@@ -458,8 +458,8 @@
         private System.Windows.Forms.ComboBox CBoxType;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.RadioButton RBtnReInfinite;
+        private System.Windows.Forms.NumericUpDown Repeat;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox PointY;
         private System.Windows.Forms.Label label3;

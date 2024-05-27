@@ -1,45 +1,31 @@
 ﻿using AutoClick.Models;
 using Gma.System.MouseKeyHook;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsInput;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AutoClick
 {
     public partial class Form1 : Form
     {
-        private MouseHook _mouseHook;
         private IKeyboardMouseEvents _keyboardMouse;
-        private InputSimulator _inputSimulator;
         private bool PointClick = false;
+        private bool RepeatToStop = false;
+
+        private int MiniSecs;
+        private int CountRepeat;
+        private int Point_X;
+        private int Point_Y;
 
         public Form1()
         {
             InitializeComponent();
-            _inputSimulator = new InputSimulator();
-
-            //_mouseHook = new MouseHook();
-            //_mouseHook.OnMouseAction += new MouseHook.MouseActionEventHandler(MouseHook_OnMouseAction);
-            //_mouseHook.SetHook();
-
-            // KeyUp
-            this.KeyPreview = true;
-            this.KeyUp += new KeyEventHandler(Form1_KeyUp);
 
             // ComboBox
             this.CBoxButton.SelectedIndex = 0;
             this.CBoxType.SelectedIndex = 0;
-
-            // ClickMouse
-            //this.MouseClick += new MouseEventHandler(GetLocationPoint);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -52,38 +38,17 @@ namespace AutoClick
             PointClick = true;
         }
 
-        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        private async void BtnStart_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("Bạn đã bấm phím: " + e.KeyCode);
+            //this.BtnStart.Enabled = false;
+            //this.BtnStop.Enabled = true;
+            await AutoClickHandle();
         }
 
-        private void BtnStart_Click(object sender, EventArgs e)
+        private async void BtnStop_Click(object sender, EventArgs e)
         {
-            this.BtnStop.Enabled = true;
-            this.BtnStart.Enabled = false;
+            await AutoClickHandle();
         }
-
-        private void BtnStop_Click(object sender, EventArgs e)
-        {
-            this.BtnStart.Enabled = true;
-            this.BtnStop.Enabled = false;
-        }
-
-        //private void MouseHook_OnMouseAction(object sender, MouseEventArgs e)
-        //{
-        //    if (PointClick)
-        //    {
-        //        PointClick = false;
-        //        this.PointX.Text = e.X.ToString();
-        //        this.PointY.Text = e.Y.ToString();
-        //    }
-        //}
-
-        //protected override void OnFormClosing(FormClosingEventArgs e)
-        //{
-        //    _mouseHook.Unhook();
-        //    base.OnFormClosing(e);
-        //}
 
         private void Subscribe()
         {
@@ -119,40 +84,105 @@ namespace AutoClick
             }
         }
 
-        private void GlobalHookKeyUp(object sender, KeyEventArgs e)
+        private async void GlobalHookKeyUp(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.F5)
-            {
-                PointClick = false;
-                //MessageBox.Show($"Key Pressed: {e.KeyCode}");
-                int x = int.Parse(this.PointX.Text);
-                int y = int.Parse(this.PointY.Text);
-                //MessageBox.Show($"Point: {x}, {y}");
-                _inputSimulator.Mouse.MoveMouseToPositionOnVirtualDesktop(x, y);
-                _inputSimulator.Mouse.LeftButtonClick();
-                //MouseClickSimulator.SimulateLeftClick(x, y);
+            if (e.KeyCode != Keys.F4)
+                return;
+            await AutoClickHandle();
+        }
 
-                //Point position = Cursor.Position;
-                //MessageBox.Show($"Mouse Down: {position}");
+        private async Task AutoClickHandle()
+        {
+            if (this.BtnStart.Enabled)
+            {
+                this.BtnStart.Enabled = false;
+                this.BtnStop.Enabled = true;
             }
+            else if (this.BtnStop.Enabled)
+            {
+                this.BtnStop.Enabled = false;
+                this.BtnStart.Enabled = true;
+            }
+
+            if (this.RBtnRepeat.Checked)
+                await AutoClickRepeat();
+            if (this.RBtnReInfinite.Checked)
+            {
+                if (RepeatToStop)
+                    RepeatToStop = false;
+                else RepeatToStop = true;
+                await AutoClickReInfinite();
+            }
+        }
+
+        private async Task AutoClickRepeat()
+        {
+            PointClick = false;
+            UpdateGlobalVariable();
+
+            if (this.RBtnLocation1.Checked)
+            {
+                for (int i = 0; i < CountRepeat; i++)
+                {
+                    MouseClickSimulator.LeftClick();
+                    await Task.Delay(MiniSecs);
+                }
+            }
+            if (this.RBtnLocation2.Checked)
+            {
+                for (int i = 0; i < CountRepeat; i++)
+                {
+                    Cursor.Position = new Point(Point_X, Point_Y);
+                    MouseClickSimulator.LeftClick();
+                    await Task.Delay(MiniSecs);
+                }
+            }
+        }
+
+        private async Task AutoClickReInfinite()
+        {
+            PointClick = false;
+            UpdateGlobalVariable();
+
+            if (this.RBtnLocation1.Checked)
+            {
+                while (true)
+                {
+                    if (RepeatToStop == false) break;
+                    MouseClickSimulator.LeftClick();
+                    await Task.Delay(MiniSecs);
+                }
+            }
+
+            if (this.RBtnLocation2.Checked)
+            {
+                while (true)
+                {
+                    if (RepeatToStop == false) break;
+                    Cursor.Position = new Point(Point_X, Point_Y);
+                    MouseClickSimulator.LeftClick();
+                    await Task.Delay(MiniSecs);
+                }
+            }
+            //for (int i = 0; i < CountRepeat; i++)
+            //{
+            //    //Cursor.Position = new Point(Point_X, Point_Y);
+            //    MouseClickSimulator.LeftClick();
+            //    await Task.Delay(MiniSecs);
+            //}
+        }
+
+        private void UpdateGlobalVariable()
+        {
+            MiniSecs = int.Parse(this.MiniSecs_txt.Text);
+            CountRepeat = Decimal.ToInt32(this.Repeat.Value);
+            Point_X = int.Parse(this.PointX.Text);
+            Point_Y = int.Parse(this.PointY.Text);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Unsubscribe();
         }
-
-        //private void GetLocationPoint(object sender, MouseEventArgs e)
-        //{
-        //    //Point clickPoint = e.Location;
-        //    Point cursorPoint;
-        //    if (GetCursorPos(out cursorPoint))
-        //    {
-        //        MessageBox.Show("Vị trí chuột click: " + cursorPoint.X + " : " + cursorPoint.Y);
-        //    }
-        //}
-
-        //[DllImport("user32.dll")]
-        //static extern bool GetCursorPos(out Point lpPoint);
     }
 }
