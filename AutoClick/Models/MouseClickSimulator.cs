@@ -37,19 +37,15 @@ namespace AutoClick.Models
             mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
         }
 
+        public static void MiddleClick()
+        {
+            mouse_event(MOUSEEVENTF_MIDDLEDOWN | MOUSEEVENTF_MIDDLEUP, 0, 0, 0, 0);
+        }
+
         // Di chuyển con trỏ chuột đến vị trí (x, y) trên màn hình
         public static void MoveMouse(int x, int y)
         {
             mouse_event(MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE, (uint)x, (uint)y, 0, 0);
-        }
-
-        public static void ClickRepeat(int repeat, int miniSecs = 0)
-        {
-            for (int i = 0; i < repeat; i++)
-            {
-                LeftClick();
-                Thread.Sleep(miniSecs);
-            }
         }
     }
 }

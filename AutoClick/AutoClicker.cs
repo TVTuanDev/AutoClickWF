@@ -5,12 +5,14 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace AutoClick
 {
-    public partial class Form1 : Form
+    public partial class AutoClicker : Form
     {
         private IKeyboardMouseEvents _keyboardMouse;
+        private const string FilePath = "/data.txt";
         private bool PointClick = false;
         private bool RepeatToStop = false;
 
@@ -19,7 +21,9 @@ namespace AutoClick
         private int Point_X;
         private int Point_Y;
 
-        public Form1()
+        public bool Hotkey = true;
+
+        public AutoClicker()
         {
             InitializeComponent();
 
@@ -31,6 +35,23 @@ namespace AutoClick
         private void Form1_Load(object sender, EventArgs e)
         {
             Subscribe();
+
+            if (!File.Exists(FilePath))
+            {
+                using (StreamWriter sw = File.CreateText(FilePath))
+                {
+                    sw.WriteLine(@"Hotkey: F4");
+                    sw.WriteLine(@"Location: 0,0");
+                }
+            }
+            else
+            {
+                using (StreamReader sr = new StreamReader(FilePath))
+                {
+                    string content = sr.ReadToEnd();
+                    MessageBox.Show("Content to file: " + content);
+                }
+            }
         }
 
         private void BtnLocation_Click(object sender, EventArgs e)
@@ -40,8 +61,6 @@ namespace AutoClick
 
         private async void BtnStart_Click(object sender, EventArgs e)
         {
-            //this.BtnStart.Enabled = false;
-            //this.BtnStop.Enabled = true;
             await AutoClickHandle();
         }
 
@@ -86,23 +105,15 @@ namespace AutoClick
 
         private async void GlobalHookKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode != Keys.F4)
+            if (e.KeyCode != Keys.F4 || !Hotkey)
                 return;
             await AutoClickHandle();
         }
 
         private async Task AutoClickHandle()
         {
-            if (this.BtnStart.Enabled)
-            {
-                this.BtnStart.Enabled = false;
-                this.BtnStop.Enabled = true;
-            }
-            else if (this.BtnStop.Enabled)
-            {
-                this.BtnStop.Enabled = false;
-                this.BtnStart.Enabled = true;
-            }
+            this.BtnStart.Enabled = this.BtnStart.Enabled ? false : true;
+            this.BtnStop.Enabled = this.BtnStop.Enabled ? false : true;
 
             if (this.RBtnRepeat.Checked)
                 await AutoClickRepeat();
@@ -124,7 +135,7 @@ namespace AutoClick
             {
                 for (int i = 0; i < CountRepeat; i++)
                 {
-                    MouseClickSimulator.LeftClick();
+                    await this.Clicker();
                     await Task.Delay(MiniSecs);
                 }
             }
@@ -133,10 +144,12 @@ namespace AutoClick
                 for (int i = 0; i < CountRepeat; i++)
                 {
                     Cursor.Position = new Point(Point_X, Point_Y);
-                    MouseClickSimulator.LeftClick();
+                    await this.Clicker();
                     await Task.Delay(MiniSecs);
                 }
             }
+            this.BtnStart.Enabled = this.BtnStart.Enabled ? false : true;
+            this.BtnStop.Enabled = this.BtnStop.Enabled ? false : true;
         }
 
         private async Task AutoClickReInfinite()
@@ -149,7 +162,7 @@ namespace AutoClick
                 while (true)
                 {
                     if (RepeatToStop == false) break;
-                    MouseClickSimulator.LeftClick();
+                    await this.Clicker();
                     await Task.Delay(MiniSecs);
                 }
             }
@@ -160,24 +173,57 @@ namespace AutoClick
                 {
                     if (RepeatToStop == false) break;
                     Cursor.Position = new Point(Point_X, Point_Y);
-                    MouseClickSimulator.LeftClick();
+                    await this.Clicker();
                     await Task.Delay(MiniSecs);
                 }
             }
-            //for (int i = 0; i < CountRepeat; i++)
-            //{
-            //    //Cursor.Position = new Point(Point_X, Point_Y);
-            //    MouseClickSimulator.LeftClick();
-            //    await Task.Delay(MiniSecs);
-            //}
         }
 
         private void UpdateGlobalVariable()
         {
-            MiniSecs = int.Parse(this.MiniSecs_txt.Text);
+            int hours = int.Parse(this.Hour_txt.Text);
+            int mins = int.Parse(this.Mins_txt.Text);
+            int secs = int.Parse(this.Secs_txt.Text);
+            int minisec = int.Parse(this.MiniSecs_txt.Text);
+            MiniSecs = hours * 60 * 60 * 1000 + mins * 60 * 1000 + secs * 1000 + minisec;
             CountRepeat = Decimal.ToInt32(this.Repeat.Value);
             Point_X = int.Parse(this.PointX.Text);
             Point_Y = int.Parse(this.PointY.Text);
+        }
+
+        private async Task Clicker()
+        {
+            if (this.CBoxType.Text == "Single")
+            {
+                if (this.CBoxButton.Text == "Left")
+                    MouseClickSimulator.LeftClick();
+                else if (this.CBoxButton.Text == "Right")
+                    MouseClickSimulator.RightClick();
+                else MouseClickSimulator.MiddleClick();
+            }
+            else
+            {
+                if (this.CBoxButton.Text == "Left")
+                    MouseClickSimulator.LeftClick();
+                else if (this.CBoxButton.Text == "Right")
+                    MouseClickSimulator.RightClick();
+                else MouseClickSimulator.MiddleClick();
+
+                await Task.Delay(100);
+
+                if (this.CBoxButton.Text == "Left")
+                    MouseClickSimulator.LeftClick();
+                else if (this.CBoxButton.Text == "Right")
+                    MouseClickSimulator.RightClick();
+                else MouseClickSimulator.MiddleClick();
+            }
+        }
+
+        private void BtnHotkey_Click(object sender, EventArgs e)
+        {
+            Hotkey = false;
+            HotkeySetting hotkeySetting = new HotkeySetting(this);
+            hotkeySetting.Show();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
