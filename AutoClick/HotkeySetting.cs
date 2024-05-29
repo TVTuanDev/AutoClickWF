@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +16,17 @@ namespace AutoClick
     {
         private IKeyboardMouseEvents _keyboardMouse;
         private AutoClicker _autoClicker;
+        private const string FilePath = "/data.txt";
 
         public HotkeySetting(AutoClicker autoClicker)
         {
             InitializeComponent();
             _autoClicker = autoClicker;
+        }
+
+        private void HotkeySetting_Load(object sender, EventArgs e)
+        {
+            this.Hotkey_txt.Text = _autoClicker.GetHotkey();
         }
 
         private void Subscribe()
@@ -40,13 +47,8 @@ namespace AutoClick
             this.StartAndStop.Enabled = true;
             this.OkHotkey.Enabled = true;
             this.CancelHotkey.Enabled = true;
-            Unsubscribe();
-        }
 
-        private void CancelHotkey_Click(object sender, EventArgs e)
-        {
-            _autoClicker.Hotkey = true;
-            this.Close();
+            Unsubscribe();
         }
 
         private void StartAndStop_Click(object sender, EventArgs e)
@@ -56,7 +58,33 @@ namespace AutoClick
             this.StartAndStop.Enabled = false;
             this.OkHotkey.Enabled = false;
             this.CancelHotkey.Enabled = false;
-            //this.Hotkey_txt.Focused = false;
+        }
+
+        private void OkHotkey_Click(object sender, EventArgs e)
+        {
+            // Đọc nội dung của file vào danh sách
+            List<string> lines = File.ReadAllLines(FilePath).ToList();
+
+            // Tìm và cập nhật nội dung của hotkey và location
+            for (int i = 0; i < lines.Count; i++)
+            {
+                if (lines[i].StartsWith("Hotkey:"))
+                {
+                    lines[i] = "Hotkey: " + this.Hotkey_txt.Text;
+                }
+            }
+
+            // Ghi lại toàn bộ nội dung đã cập nhật vào file
+            File.WriteAllLines(FilePath, lines);
+
+            _autoClicker.Form1_Load(sender, e);
+            this.Close();
+        }
+
+        private void CancelHotkey_Click(object sender, EventArgs e)
+        {
+            _autoClicker.Form1_Load(sender, e);
+            this.Close();
         }
     }
 }

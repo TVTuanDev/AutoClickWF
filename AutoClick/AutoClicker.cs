@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AutoClick
 {
@@ -21,8 +23,6 @@ namespace AutoClick
         private int Point_X;
         private int Point_Y;
 
-        public bool Hotkey = true;
-
         public AutoClicker()
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace AutoClick
             this.CBoxType.SelectedIndex = 0;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        public void Form1_Load(object sender, EventArgs e)
         {
             Subscribe();
 
@@ -46,11 +46,8 @@ namespace AutoClick
             }
             else
             {
-                using (StreamReader sr = new StreamReader(FilePath))
-                {
-                    string content = sr.ReadToEnd();
-                    MessageBox.Show("Content to file: " + content);
-                }
+                this.BtnStart.Text = $"Start ({GetHotkey()})";
+                this.BtnStop.Text = $"Stop ({GetHotkey()})";
             }
         }
 
@@ -105,8 +102,9 @@ namespace AutoClick
 
         private async void GlobalHookKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode != Keys.F4 || !Hotkey)
+            if (e.KeyCode.ToString() != GetHotkey())
                 return;
+
             await AutoClickHandle();
         }
 
@@ -221,9 +219,25 @@ namespace AutoClick
 
         private void BtnHotkey_Click(object sender, EventArgs e)
         {
-            Hotkey = false;
+            Unsubscribe();
             HotkeySetting hotkeySetting = new HotkeySetting(this);
             hotkeySetting.Show();
+        }
+
+        public string GetHotkey()
+        {
+            List<string> lines = File.ReadAllLines(FilePath).ToList();
+
+            string hotkey = string.Empty;
+            foreach (var line in lines)
+            {
+                if (line.StartsWith("Hotkey:"))
+                {
+                    hotkey = line.Substring("Hotkey:".Length).Trim();
+                }
+            }
+
+            return hotkey.ToString();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

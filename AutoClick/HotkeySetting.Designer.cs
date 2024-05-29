@@ -66,6 +66,7 @@
             this.OkHotkey.TabStop = false;
             this.OkHotkey.Text = "Ok";
             this.OkHotkey.UseVisualStyleBackColor = true;
+            this.OkHotkey.Click += new System.EventHandler(this.OkHotkey_Click);
             // 
             // CancelHotkey
             // 
@@ -93,6 +94,7 @@
             this.Name = "HotkeySetting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HotkeySetting";
+            this.Load += new System.EventHandler(this.HotkeySetting_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
