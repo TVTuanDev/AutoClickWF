@@ -399,6 +399,7 @@
             this.BtnRecord.TabStop = false;
             this.BtnRecord.Text = "Record and Playback";
             this.BtnRecord.UseVisualStyleBackColor = true;
+            this.BtnRecord.Click += new System.EventHandler(this.BtnRecord_Click);
             // 
             // BtnHotkey
             // 

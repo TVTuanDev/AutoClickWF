@@ -16,7 +16,7 @@ namespace AutoClick
     {
         private IKeyboardMouseEvents _keyboardMouse;
         private AutoClicker _autoClicker;
-        private const string FilePath = "/data.txt";
+        private const string FilePath = "data.txt";
 
         public HotkeySetting(AutoClicker autoClicker)
         {
@@ -77,12 +77,14 @@ namespace AutoClick
             // Ghi lại toàn bộ nội dung đã cập nhật vào file
             File.WriteAllLines(FilePath, lines);
 
+            _autoClicker.Show();
             _autoClicker.Form1_Load(sender, e);
             this.Close();
         }
 
         private void CancelHotkey_Click(object sender, EventArgs e)
         {
+            _autoClicker.Show();
             _autoClicker.Form1_Load(sender, e);
             this.Close();
         }

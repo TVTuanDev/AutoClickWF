@@ -14,8 +14,7 @@ namespace AutoClick
     public partial class AutoClicker : Form
     {
         private IKeyboardMouseEvents _keyboardMouse;
-        private const string FilePath = "/data.txt";
-        private bool PointClick = false;
+        private const string FilePath = "data.txt";
         private bool RepeatToStop = false;
 
         private int MiniSecs;
@@ -53,7 +52,7 @@ namespace AutoClick
 
         private void BtnLocation_Click(object sender, EventArgs e)
         {
-            PointClick = true;
+            _keyboardMouse.MouseDownExt += GlobalHookMouseDownExt;
         }
 
         private async void BtnStart_Click(object sender, EventArgs e)
@@ -71,16 +70,12 @@ namespace AutoClick
             // Tạo đối tượng toàn cục để bắt sự kiện
             _keyboardMouse = Hook.GlobalEvents();
 
-            // Thêm hàm của sự kiện nhấp chuột
-            _keyboardMouse.MouseDownExt += GlobalHookMouseDownExt;
             // Thêm hàm của sự kiện nhấn bàn phím
             _keyboardMouse.KeyUp += GlobalHookKeyUp;
         }
 
         private void Unsubscribe()
         {
-            // Xóa hàm của sự kiện nhấp chuột
-            _keyboardMouse.MouseDownExt -= GlobalHookMouseDownExt;
             // Xóa hàm của sự kiện nhấn bàn phím
             _keyboardMouse.KeyUp -= GlobalHookKeyUp;
 
@@ -91,13 +86,11 @@ namespace AutoClick
 
         private void GlobalHookMouseDownExt(object sender, MouseEventExtArgs e)
         {
-            if (PointClick)
-            {
-                PointClick = false;
-                Point cursorPosition = Cursor.Position;
-                this.PointX.Text = cursorPosition.X.ToString();
-                this.PointY.Text = cursorPosition.Y.ToString();
-            }
+            Point cursorPosition = Cursor.Position;
+            this.PointX.Text = cursorPosition.X.ToString();
+            this.PointY.Text = cursorPosition.Y.ToString();
+
+            _keyboardMouse.MouseDownExt -= GlobalHookMouseDownExt;
         }
 
         private async void GlobalHookKeyUp(object sender, KeyEventArgs e)
@@ -126,7 +119,6 @@ namespace AutoClick
 
         private async Task AutoClickRepeat()
         {
-            PointClick = false;
             UpdateGlobalVariable();
 
             if (this.RBtnLocation1.Checked)
@@ -152,7 +144,6 @@ namespace AutoClick
 
         private async Task AutoClickReInfinite()
         {
-            PointClick = false;
             UpdateGlobalVariable();
 
             if (this.RBtnLocation1.Checked)
@@ -221,7 +212,16 @@ namespace AutoClick
         {
             Unsubscribe();
             HotkeySetting hotkeySetting = new HotkeySetting(this);
+            this.Hide();
             hotkeySetting.Show();
+        }
+
+        private void BtnRecord_Click(object sender, EventArgs e)
+        {
+            Unsubscribe();
+            RecordAndPlay recordAndPlay = new RecordAndPlay(this);
+            this.Hide();
+            recordAndPlay.Show();
         }
 
         public string GetHotkey()
