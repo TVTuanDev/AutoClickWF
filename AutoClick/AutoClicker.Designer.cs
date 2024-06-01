@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AutoClicker));
             this.Hour_txt = new System.Windows.Forms.TextBox();
             this.hours = new System.Windows.Forms.Label();
             this.BtnLocation = new System.Windows.Forms.Button();
@@ -426,6 +427,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ClickOptions);
             this.Controls.Add(this.ClickInterval);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "AutoClicker";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

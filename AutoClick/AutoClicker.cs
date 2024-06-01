@@ -14,7 +14,7 @@ namespace AutoClick
     public partial class AutoClicker : Form
     {
         private IKeyboardMouseEvents _keyboardMouse;
-        private const string FilePath = "data.txt";
+        private const string FilePath = "AutoClicker/data.txt";
         private bool RepeatToStop = false;
 
         private int MiniSecs;
@@ -35,9 +35,18 @@ namespace AutoClick
         {
             Subscribe();
 
-            if (!File.Exists(FilePath))
+            if (!File.Exists(GetFilePath()))
             {
-                using (StreamWriter sw = File.CreateText(FilePath))
+                // Đường dẫn đến thư mục
+                string myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string autoClickPath = Path.Combine(myDocumentsPath, "AutoClicker");
+
+                if (!Directory.Exists(autoClickPath))
+                {
+                    Directory.CreateDirectory(autoClickPath);
+                }
+
+                using (StreamWriter sw = File.CreateText(GetFilePath()))
                 {
                     sw.WriteLine(@"Hotkey: F4");
                     sw.WriteLine(@"Location: 0,0");
@@ -224,9 +233,20 @@ namespace AutoClick
             recordAndPlay.Show();
         }
 
+        public string GetFilePath()
+        {
+            // Đường dẫn đến thư mục 
+            string myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            // Đường dẫn đầy đủ tới tệp tin
+            string filePath = Path.Combine(myDocumentsPath, FilePath);
+
+            return filePath;
+        }
+
         public string GetHotkey()
         {
-            List<string> lines = File.ReadAllLines(FilePath).ToList();
+            List<string> lines = File.ReadAllLines(GetFilePath()).ToList();
 
             string hotkey = string.Empty;
             foreach (var line in lines)

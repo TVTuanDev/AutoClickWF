@@ -109,16 +109,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Image\play-32.png" />
+    <None Include="Images\play-24.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Image\circle-32.png" />
+    <None Include="Images\circle-24.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Image\play-24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Image\circle-24.png" />
+    <None Include="Images\square-24.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

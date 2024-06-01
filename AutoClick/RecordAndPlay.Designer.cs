@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RecordAndPlay));
             this.MoreRecord = new System.Windows.Forms.Button();
-            this.StopRecord = new System.Windows.Forms.Button();
+            this.BtnRecord = new System.Windows.Forms.Button();
             this.PlayRecord = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -42,23 +43,25 @@
             this.MoreRecord.TabStop = false;
             this.MoreRecord.Text = "More";
             this.MoreRecord.UseVisualStyleBackColor = true;
+            this.MoreRecord.Click += new System.EventHandler(this.MoreRecord_Click);
             // 
-            // StopRecord
+            // BtnRecord
             // 
-            this.StopRecord.BackgroundImage = global::AutoClick.Properties.Resources.circle_24;
-            this.StopRecord.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.StopRecord.Location = new System.Drawing.Point(119, 12);
-            this.StopRecord.Name = "StopRecord";
-            this.StopRecord.Size = new System.Drawing.Size(90, 45);
-            this.StopRecord.TabIndex = 2;
-            this.StopRecord.TabStop = false;
-            this.StopRecord.UseVisualStyleBackColor = true;
-            this.StopRecord.Click += new System.EventHandler(this.StopRecord_Click);
+            this.BtnRecord.BackgroundImage = global::AutoClick.Properties.Resources.circle_24;
+            this.BtnRecord.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.BtnRecord.Location = new System.Drawing.Point(119, 12);
+            this.BtnRecord.Name = "BtnRecord";
+            this.BtnRecord.Size = new System.Drawing.Size(90, 45);
+            this.BtnRecord.TabIndex = 2;
+            this.BtnRecord.TabStop = false;
+            this.BtnRecord.UseVisualStyleBackColor = true;
+            this.BtnRecord.Click += new System.EventHandler(this.BtnRecord_Click);
             // 
             // PlayRecord
             // 
             this.PlayRecord.BackgroundImage = global::AutoClick.Properties.Resources.play_24;
             this.PlayRecord.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.PlayRecord.Enabled = false;
             this.PlayRecord.Location = new System.Drawing.Point(12, 12);
             this.PlayRecord.Name = "PlayRecord";
             this.PlayRecord.Size = new System.Drawing.Size(90, 45);
@@ -72,9 +75,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(327, 71);
-            this.Controls.Add(this.StopRecord);
+            this.Controls.Add(this.BtnRecord);
             this.Controls.Add(this.PlayRecord);
             this.Controls.Add(this.MoreRecord);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "RecordAndPlay";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -88,6 +92,6 @@
         #endregion
         private System.Windows.Forms.Button MoreRecord;
         private System.Windows.Forms.Button PlayRecord;
-        private System.Windows.Forms.Button StopRecord;
+        private System.Windows.Forms.Button BtnRecord;
     }
 }

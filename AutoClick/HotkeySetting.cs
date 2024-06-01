@@ -16,7 +16,7 @@ namespace AutoClick
     {
         private IKeyboardMouseEvents _keyboardMouse;
         private AutoClicker _autoClicker;
-        private const string FilePath = "data.txt";
+        private const string FilePath = "AutoClicker/data.txt";
 
         public HotkeySetting(AutoClicker autoClicker)
         {
@@ -63,7 +63,7 @@ namespace AutoClick
         private void OkHotkey_Click(object sender, EventArgs e)
         {
             // Đọc nội dung của file vào danh sách
-            List<string> lines = File.ReadAllLines(FilePath).ToList();
+            List<string> lines = File.ReadAllLines(_autoClicker.GetFilePath()).ToList();
 
             // Tìm và cập nhật nội dung của hotkey và location
             for (int i = 0; i < lines.Count; i++)
@@ -75,7 +75,7 @@ namespace AutoClick
             }
 
             // Ghi lại toàn bộ nội dung đã cập nhật vào file
-            File.WriteAllLines(FilePath, lines);
+            File.WriteAllLines(_autoClicker.GetFilePath(), lines);
 
             _autoClicker.Show();
             _autoClicker.Form1_Load(sender, e);
