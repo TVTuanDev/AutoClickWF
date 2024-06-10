@@ -21,6 +21,8 @@ namespace AutoClick
 
         private List<ClickInfo> ClickInfoList = new List<ClickInfo>();
         private bool RecordBtn = true;
+        private bool EventClick = false;
+        private bool LoopClick = false;
 
         private string PlayImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "play-24.png");
         private string CircleImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "circle-24.png");
@@ -38,23 +40,27 @@ namespace AutoClick
 
         private void RecordAndPlay_Load(object sender, EventArgs e)
         {
-
+            Subscribe();
         }
 
         private void Subscribe()
         {
             _keyboardMouse = Hook.GlobalEvents();
             _keyboardMouse.MouseDownExt += RecordMouseClick;
+            _keyboardMouse.KeyDown += RecordMouseKeyDown;
         }
 
         private void Unsubscribe()
         {
             _keyboardMouse.MouseDownExt -= RecordMouseClick;
+            _keyboardMouse.KeyDown -= RecordMouseKeyDown;
             _keyboardMouse.Dispose();
         }
 
         private void RecordMouseClick(object sender, MouseEventArgs e)
         {
+            if (!EventClick)
+                return;
             Point cursor = Cursor.Position;
             var clickInfo = new ClickInfo
             {
@@ -66,15 +72,30 @@ namespace AutoClick
             ClickInfoList.Add(clickInfo);
         }
 
+        private async void RecordMouseKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.D2)
+            {
+                MessageBox.Show("Ctrl + 2 pressed!");
+                return;
+            }
+            if (e.KeyCode != Keys.F6)
+                return;
+            HandleImagePlayRecord();
+            LoopClick = LoopClick ? false : true;
+            await ClickHandleRecord();
+            HandleImagePlayRecord();
+        }
+
         private async void PlayRecord_Click(object sender, EventArgs e)
         {
             try
             {
-                HandlePlayRecord();
+                HandleImagePlayRecord();
 
                 await ClickHandleRecord();
 
-                HandlePlayRecord();
+                HandleImagePlayRecord();
             }
             catch (Exception ex)
             {
@@ -93,7 +114,7 @@ namespace AutoClick
 
                 if (RecordBtn)
                 {
-                    Subscribe();
+                    EventClick = true;
                     ClickInfoList = new List<ClickInfo>();
                     ClickInfo clickInfo = new ClickInfo
                     {
@@ -106,7 +127,7 @@ namespace AutoClick
                 }
                 else
                 {
-                    Unsubscribe();
+                    EventClick = false;
                 }
 
                 RecordBtn = RecordBtn ? false : true;
@@ -122,36 +143,44 @@ namespace AutoClick
             MessageBox.Show("Chức năng đang được nghiên cứu!");
         }
 
+        private void HandleRecord()
+        {
+
+        }
+
         private async Task ClickHandleRecord()
         {
             try
             {
-                for (int i = 0; i < ClickInfoList.Count(); i++)
+                while (LoopClick)
                 {
-                    TimeSpan delay = i < ClickInfoList.Count() - 1
-                        ? ClickInfoList[i + 1].TimeDelay - ClickInfoList[i].TimeDelay
-                        : TimeSpan.FromMilliseconds(0);
-                    if (i == 0 || i == ClickInfoList.Count() - 1)
+                    for (int i = 0; i < ClickInfoList.Count(); i++)
                     {
+                        TimeSpan delay = i < ClickInfoList.Count() - 1
+                            ? ClickInfoList[i + 1].TimeDelay - ClickInfoList[i].TimeDelay
+                            : TimeSpan.FromMilliseconds(0);
+                        if (i == 0 || i == ClickInfoList.Count() - 1)
+                        {
+                            await Task.Delay(delay);
+                            continue;
+                        }
+
+                        Cursor.Position = new Point(ClickInfoList[i].Point_x, ClickInfoList[i].Point_y);
+                        if (ClickInfoList[i].TypeButton == "Left")
+                        {
+                            MouseClickSimulator.LeftClick();
+                        }
+                        else if (ClickInfoList[i].TypeButton == "Right")
+                        {
+                            MouseClickSimulator.RightClick();
+                        }
+                        else
+                        {
+                            MouseClickSimulator.MiddleClick();
+                        }
+
                         await Task.Delay(delay);
-                        continue;
                     }
-
-                    Cursor.Position = new Point(ClickInfoList[i].Point_x, ClickInfoList[i].Point_y);
-                    if (ClickInfoList[i].TypeButton == "Left")
-                    {
-                        MouseClickSimulator.LeftClick();
-                    }
-                    else if (ClickInfoList[i].TypeButton == "Right")
-                    {
-                        MouseClickSimulator.RightClick();
-                    }
-                    else
-                    {
-                        MouseClickSimulator.MiddleClick();
-                    }
-
-                    await Task.Delay(delay);
                 }
             }
             catch (Exception ex)
@@ -160,7 +189,7 @@ namespace AutoClick
             }
         }
 
-        private void HandlePlayRecord()
+        private void HandleImagePlayRecord()
         {
             this.PlayRecord.BackgroundImage =
                 RecordBtn ? Image.FromFile(SquareImagePath)
@@ -170,8 +199,25 @@ namespace AutoClick
             RecordBtn = RecordBtn ? false : true;
         }
 
+        private string GetHotkey()
+        {
+            List<string> lines = File.ReadAllLines(_autoClicker.GetFilePath()).ToList();
+
+            string hotkey = string.Empty;
+            foreach (var line in lines)
+            {
+                if (line.StartsWith("Hotkey:"))
+                {
+                    hotkey = line.Substring("Hotkey:".Length).Trim();
+                }
+            }
+
+            return hotkey.ToString();
+        }
+
         private void RecordAndPlay_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Unsubscribe();
             _autoClicker.Show();
             _autoClicker.Form1_Load(sender, e);
         }

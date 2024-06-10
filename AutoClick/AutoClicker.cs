@@ -119,9 +119,7 @@ namespace AutoClick
                 await AutoClickRepeat();
             if (this.RBtnReInfinite.Checked)
             {
-                if (RepeatToStop)
-                    RepeatToStop = false;
-                else RepeatToStop = true;
+                RepeatToStop = RepeatToStop ? false : true;
                 await AutoClickReInfinite();
             }
         }
