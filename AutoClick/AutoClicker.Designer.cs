@@ -431,7 +431,7 @@
             this.MaximizeBox = false;
             this.Name = "AutoClicker";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Auto Clicked by TuanDz";
+            this.Text = "Auto Clicked by TuanDev";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ClickInterval.ResumeLayout(false);
