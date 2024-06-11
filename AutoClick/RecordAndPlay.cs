@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,13 +29,16 @@ namespace AutoClick
         private string CircleImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "circle-24.png");
         private string SquareImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "square-24.png");
 
+        private int MiniSecs;
+        private int CountRepeat;
+
         public RecordAndPlay(AutoClicker autoClicker)
         {
             InitializeComponent();
             _autoClicker = autoClicker;
 
             ToolTip toolTip = new ToolTip();
-            toolTip.SetToolTip(this.PlayRecord, "Playback");
+            toolTip.SetToolTip(this.PlayRecord, "Playback (F6)");
             toolTip.SetToolTip(this.BtnRecord, "Start recording");
         }
 
@@ -74,16 +78,11 @@ namespace AutoClick
 
         private async void RecordMouseKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.D2)
-            {
-                MessageBox.Show("Ctrl + 2 pressed!");
-                return;
-            }
             if (e.KeyCode != Keys.F6)
                 return;
+
             HandleImagePlayRecord();
-            LoopClick = LoopClick ? false : true;
-            await ClickHandleRecord();
+            await HandleRecord();
             HandleImagePlayRecord();
         }
 
@@ -93,7 +92,7 @@ namespace AutoClick
             {
                 HandleImagePlayRecord();
 
-                await ClickHandleRecord();
+                await HandleRecord();
 
                 HandleImagePlayRecord();
             }
@@ -116,14 +115,6 @@ namespace AutoClick
                 {
                     EventClick = true;
                     ClickInfoList = new List<ClickInfo>();
-                    ClickInfo clickInfo = new ClickInfo
-                    {
-                        Point_x = 0,
-                        Point_y = 0,
-                        TimeDelay = DateTime.UtcNow,
-                        TypeButton = string.Empty
-                    };
-                    ClickInfoList.Add(clickInfo);
                 }
                 else
                 {
@@ -143,44 +134,61 @@ namespace AutoClick
             MessageBox.Show("Chức năng đang được nghiên cứu!");
         }
 
-        private void HandleRecord()
+        private async Task HandleRecord()
         {
+            UpdateGlobalVariable();
+            if (this.RBtnRepeat.Checked)
+            {
+                for (int i = 0; i < CountRepeat; i++)
+                {
+                    await ClickHandleRecord();
 
+                    await Task.Delay(MiniSecs);
+                }
+            }
+            if (this.RBtnReInfinite.Checked)
+            {
+                LoopClick = LoopClick ? false : true;
+                while (LoopClick)
+                {
+                    await ClickHandleRecord();
+
+                    await Task.Delay(MiniSecs);
+                }
+            }
         }
 
         private async Task ClickHandleRecord()
         {
             try
             {
-                while (LoopClick)
+                for (int i = 0; i < ClickInfoList.Count(); i++)
                 {
-                    for (int i = 0; i < ClickInfoList.Count(); i++)
+                    TimeSpan delay = i < ClickInfoList.Count() - 1
+                        ? ClickInfoList[i + 1].TimeDelay - ClickInfoList[i].TimeDelay
+                        : TimeSpan.FromMilliseconds(0);
+
+                    if (i == ClickInfoList.Count - 2)
+                        delay = TimeSpan.FromMilliseconds(0);
+
+                    if (i == ClickInfoList.Count() - 1)
+                        continue;
+
+                    Cursor.Position = new Point(ClickInfoList[i].Point_x, ClickInfoList[i].Point_y);
+                    if (ClickInfoList[i].TypeButton == "Left")
                     {
-                        TimeSpan delay = i < ClickInfoList.Count() - 1
-                            ? ClickInfoList[i + 1].TimeDelay - ClickInfoList[i].TimeDelay
-                            : TimeSpan.FromMilliseconds(0);
-                        if (i == 0 || i == ClickInfoList.Count() - 1)
-                        {
-                            await Task.Delay(delay);
-                            continue;
-                        }
-
-                        Cursor.Position = new Point(ClickInfoList[i].Point_x, ClickInfoList[i].Point_y);
-                        if (ClickInfoList[i].TypeButton == "Left")
-                        {
-                            MouseClickSimulator.LeftClick();
-                        }
-                        else if (ClickInfoList[i].TypeButton == "Right")
-                        {
-                            MouseClickSimulator.RightClick();
-                        }
-                        else
-                        {
-                            MouseClickSimulator.MiddleClick();
-                        }
-
-                        await Task.Delay(delay);
+                        MouseClickSimulator.LeftClick();
                     }
+                    else if (ClickInfoList[i].TypeButton == "Right")
+                    {
+                        MouseClickSimulator.RightClick();
+                    }
+                    else
+                    {
+                        MouseClickSimulator.MiddleClick();
+                    }
+
+                    await Task.Delay(delay);
                 }
             }
             catch (Exception ex)
@@ -213,6 +221,16 @@ namespace AutoClick
             }
 
             return hotkey.ToString();
+        }
+
+        private void UpdateGlobalVariable()
+        {
+            int hours = int.Parse(this.Hour_txt.Text);
+            int mins = int.Parse(this.Mins_txt.Text);
+            int secs = int.Parse(this.Secs_txt.Text);
+            int minisec = int.Parse(this.MiniSecs_txt.Text);
+            MiniSecs = hours * 60 * 60 * 1000 + mins * 60 * 1000 + secs * 1000 + minisec;
+            CountRepeat = Decimal.ToInt32(this.Repeat.Value);
         }
 
         private void RecordAndPlay_FormClosing(object sender, FormClosingEventArgs e)
