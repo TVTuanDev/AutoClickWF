@@ -46,12 +46,12 @@
             this.Mins_txt = new System.Windows.Forms.TextBox();
             this.Hour_txt = new System.Windows.Forms.TextBox();
             this.hours = new System.Windows.Forms.Label();
-            this.Speed = new System.Windows.Forms.NumericUpDown();
+            this.Nmr_Speed = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Repeat)).BeginInit();
             this.ClickInterval.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Speed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Nmr_Speed)).BeginInit();
             this.SuspendLayout();
             // 
             // MoreRecord
@@ -101,7 +101,7 @@
             this.groupBox1.Size = new System.Drawing.Size(217, 100);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Click repeat";
+            this.groupBox1.Text = "Record repeat";
             // 
             // Repeat
             // 
@@ -168,7 +168,7 @@
             this.ClickInterval.Size = new System.Drawing.Size(471, 73);
             this.ClickInterval.TabIndex = 8;
             this.ClickInterval.TabStop = false;
-            this.ClickInterval.Text = "Click interval";
+            this.ClickInterval.Text = "Record interval";
             // 
             // miniseconds
             // 
@@ -246,21 +246,20 @@
             this.hours.TabIndex = 1;
             this.hours.Text = "hours";
             // 
-            // Speed
+            // Nmr_Speed
             // 
-            this.Speed.Enabled = false;
-            this.Speed.Location = new System.Drawing.Point(69, 103);
-            this.Speed.Minimum = new decimal(new int[] {
+            this.Nmr_Speed.Location = new System.Drawing.Point(69, 103);
+            this.Nmr_Speed.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.Speed.Name = "Speed";
-            this.Speed.Size = new System.Drawing.Size(69, 22);
-            this.Speed.TabIndex = 12;
-            this.Speed.TabStop = false;
-            this.Speed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Speed.Value = new decimal(new int[] {
+            this.Nmr_Speed.Name = "Nmr_Speed";
+            this.Nmr_Speed.Size = new System.Drawing.Size(69, 22);
+            this.Nmr_Speed.TabIndex = 12;
+            this.Nmr_Speed.TabStop = false;
+            this.Nmr_Speed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Nmr_Speed.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -280,7 +279,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(492, 202);
-            this.Controls.Add(this.Speed);
+            this.Controls.Add(this.Nmr_Speed);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ClickInterval);
@@ -299,7 +298,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.Repeat)).EndInit();
             this.ClickInterval.ResumeLayout(false);
             this.ClickInterval.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Speed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Nmr_Speed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -323,7 +322,7 @@
         private System.Windows.Forms.TextBox Mins_txt;
         private System.Windows.Forms.TextBox Hour_txt;
         private System.Windows.Forms.Label hours;
-        private System.Windows.Forms.NumericUpDown Speed;
+        private System.Windows.Forms.NumericUpDown Nmr_Speed;
         private System.Windows.Forms.Label label2;
     }
 }

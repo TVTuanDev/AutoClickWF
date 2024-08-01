@@ -54,7 +54,7 @@ namespace AutoClick
         private void StartAndStop_Click(object sender, EventArgs e)
         {
             Subscribe();
-            this.Hotkey_txt.Text = "Please key";
+            this.Hotkey_txt.Text = "Press key";
             this.StartAndStop.Enabled = false;
             this.OkHotkey.Enabled = false;
             this.CancelHotkey.Enabled = false;

@@ -31,6 +31,7 @@ namespace AutoClick
 
         private int MiniSecs;
         private int CountRepeat;
+        private int Speed;
 
         public RecordAndPlay(AutoClicker autoClicker)
         {
@@ -162,6 +163,8 @@ namespace AutoClick
         {
             try
             {
+                var speed = Decimal.ToInt32(this.Nmr_Speed.Value);
+
                 for (int i = 0; i < ClickInfoList.Count(); i++)
                 {
                     TimeSpan delay = i < ClickInfoList.Count() - 1
@@ -187,6 +190,10 @@ namespace AutoClick
                     {
                         MouseClickSimulator.MiddleClick();
                     }
+
+                    var speedTime = (float)delay.TotalSeconds / (float)speed;
+
+                    delay = TimeSpan.FromSeconds(speedTime);
 
                     await Task.Delay(delay);
                 }

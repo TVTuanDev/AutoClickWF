@@ -38,8 +38,8 @@ namespace AutoClick
             if (!File.Exists(GetFilePath()))
             {
                 // Đường dẫn đến thư mục
-                string myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                string autoClickPath = Path.Combine(myDocumentsPath, "AutoClicker");
+                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string autoClickPath = Path.Combine(appDataPath, "AutoClicker");
 
                 if (!Directory.Exists(autoClickPath))
                 {
@@ -234,10 +234,10 @@ namespace AutoClick
         public string GetFilePath()
         {
             // Đường dẫn đến thư mục 
-            string myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
             // Đường dẫn đầy đủ tới tệp tin
-            string filePath = Path.Combine(myDocumentsPath, FilePath);
+            string filePath = Path.Combine(appDataPath, FilePath);
 
             return filePath;
         }

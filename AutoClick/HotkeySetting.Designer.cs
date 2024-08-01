@@ -37,6 +37,7 @@
             // 
             // Hotkey_txt
             // 
+            this.Hotkey_txt.Enabled = false;
             this.Hotkey_txt.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Hotkey_txt.Location = new System.Drawing.Point(140, 12);
             this.Hotkey_txt.Multiline = true;
@@ -54,7 +55,7 @@
             this.StartAndStop.Size = new System.Drawing.Size(122, 40);
             this.StartAndStop.TabIndex = 0;
             this.StartAndStop.TabStop = false;
-            this.StartAndStop.Text = "Start / Stop";
+            this.StartAndStop.Text = "Change key";
             this.StartAndStop.UseVisualStyleBackColor = true;
             this.StartAndStop.Click += new System.EventHandler(this.StartAndStop_Click);
             // 
